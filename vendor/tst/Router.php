@@ -29,8 +29,52 @@ class Router
 
   public static function dispatch($url)
   {
-    var_dump($url);
+    //var_dump($url);
+    if (self::mathRoute($url)) {
+      echo 'ok';
+
+    } else {
+      echo 'not ok'
+    }
+  }
+
+  public static function matchRoute($url): bool
+  {
+    // return true;
+    foreach (self::$routes as $pattern => $route) {
+      if (preg_match("#{$pattern}#", $url, $matches)) {
+        foreach ($matches as $k => $v) {
+            if (is_string($k)) {
+                $route[$k] = $v;
+            }
+        }
+        if (empty($route['action'])) {
+            $route['action'] = 'index';
+        }
+        if (!isset($route['admin_prefix'])) {
+            $route['admin_prefix'] = '';
+        } else {
+            $route['admin_prefix'] = '\\';
+        }
+        debug($route);
+        $route['controller'] = self::upperCamelCase($route['controller']);
+        debug($route);
+        return true;
+      }
+    }
+        return false;
+  }
+
+  // CamelCase
+  protected static function upperCamelCase($name): string
+  {
+    return str_replace(' ', '', ucwords(str_replace('-', ' ', $name)));
+  }
+
+  // camelCase
+  protected static function lowerCamelCase($name): string
+  {
+    return lcfirst(self::upperCamelCase($name));
   }
 
 }
-
