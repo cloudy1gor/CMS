@@ -11,9 +11,11 @@ class App
 
     public function __construct()
     {
+        $query = trim(urldecode($_SERVER['QUERY_STRING']), '/');
         new ErrorHandler();
         self::$app = Registry::getInstance();
         $this->getParams();
+        Router::dispatch($query);
     }
 
     protected function getParams()
@@ -25,5 +27,6 @@ class App
             }
         }
     }
+
 
 }
