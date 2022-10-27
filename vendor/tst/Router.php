@@ -27,10 +27,25 @@ class Router
         return self::$route;
     }
 
+    // убирает строку запроса из самого запроса
+    protected static function removeQueryString($url)
+    {
+        // если урл не пустой то
+        if ($url) {
+            // разбиваем строку по символу &
+            $params = explode('&', $url, 2);
+            if (false === str_contains($params[0], '=')) {
+                return rtrim($params[0], '/');
+            }
+        }
+        return '';
+    }
+
     // получаем урл страницы
     public static function dispatch($url)
     {
         //var_dump($url);
+        $url = self::removeQueryString($url);
         if (self::matchRoute($url)) {
             // echo 'ok';
             // Обьект контроллер
