@@ -2,8 +2,9 @@
 
 namespace app\controllers;
 
-
-class MainController
+use tst\Controller;
+// Наследуется от стандартного контроллера
+class MainController extends Controller
 {
 
     public function indexAction()
