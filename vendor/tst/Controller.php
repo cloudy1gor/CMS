@@ -16,7 +16,6 @@ abstract class Controller
     // Принимает маршрут.
     public function __construct(public $route = [])
     {
-
     }
 
     public function getModel()
@@ -30,7 +29,7 @@ abstract class Controller
     public function getView()
     {
         $this->view = $this->view ?: $this->route['action'];
-
+        (new View($this->route, $this->layout, $this->view, $this->meta))->render($this->data);
     }
     // Передаются данные из модели
     public function set($data)
@@ -40,11 +39,10 @@ abstract class Controller
     // Из контроллера в шаблон передаём метаданные страницы.
     public function setMeta($title = '', $description = '', $keywords = '')
     {
-       $this->meta = [
-           'title' => $title,
-           'description' => $description,
-           'keywords' => $keywords,
-       ];
+        $this->meta = [
+            'title' => $title,
+            'description' => $description,
+            'keywords' => $keywords,
+        ];
     }
-
 }

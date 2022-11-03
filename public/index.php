@@ -14,4 +14,4 @@ new \tst\App();
 //\tst\App::$app->setProperty('test', 'TEST');
 //var_dump(\tst\App::$app->getProperties());
 
-debug(\wfm\Router::getRoutes());
+// debug(\wfm\Router::getRoutes());
