@@ -20,7 +20,7 @@ class View
             $this->layout = $this->layout ?: LAYOUT;
         }
     }
-    // Метод для отрисовки.
+    // Метод для отрисовки. Принимает данные с контроллера и отрисовывает шаблон
     public function render($data)
     {
         if (is_array($data)) {

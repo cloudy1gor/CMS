@@ -51,6 +51,7 @@ class Router
             // Обьект контроллер
             $controller = 'app\controllers\\' . self::$route['admin_prefix'] . self::$route['controller'] . 'Controller';
             if (class_exists($controller)) {
+                // Создаём экземпляр контроллера
                 $controllerObject = new $controller(self::$route);
                 $controllerObject->getModel();
                 $action = self::lowerCamelCase(self::$route['action'] . 'Action');

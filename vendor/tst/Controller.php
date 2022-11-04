@@ -31,7 +31,7 @@ abstract class Controller
         $this->view = $this->view ?: $this->route['action'];
         (new View($this->route, $this->layout, $this->view, $this->meta))->render($this->data);
     }
-    // Передаются данные из модели
+    // Передаются данные из модели в массив data
     public function set($data)
     {
         $this->data = $data;
