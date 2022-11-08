@@ -3,6 +3,7 @@
 
 namespace tst;
 
+use RedBeanPHP\R;
 
 class View
 {
@@ -46,5 +47,39 @@ class View
             }
         }
     }
+
+    public function getMeta()
+    {
+        $out = '<title>' . h($this->meta['title']) . '</title>' . PHP_EOL;
+        $out .= '<meta name="description" content="' . h($this->meta['description']) . '">' . PHP_EOL;
+        $out .= '<meta name="keywords" content="' . h($this->meta['keywords']) . '">' . PHP_EOL;
+        return $out;
+    }
+    // Возвращает массив логов только, если Debug = true
+    public function getDbLogs()
+    {
+        if (DEBUG) {
+            $logs = R::getDatabaseAdapter()
+                ->getDatabase()
+                ->getLogger();
+            // Обьединяем массивы в 1.
+            $logs = array_merge($logs->grep( 'SELECT' ), $logs->grep( 'select' ), $logs->grep( 'INSERT' ), $logs->grep( 'UPDATE' ), $logs->grep( 'DELETE' ));
+            debug($logs);
+        }
+    }
+    // Обьединяет части шаблонов
+    public function getPart($file, $data = null)
+    {
+        if (is_array($data)) {
+            extract($data);
+        }
+        $file = APP . "/views/{$file}.php";
+        if (is_file($file)) {
+            require $file;
+        } else {
+            echo "File {$file} not found...";
+        }
+    }
+
 
 }
